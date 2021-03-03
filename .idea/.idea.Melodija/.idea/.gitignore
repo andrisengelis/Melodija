@@ -7,7 +7,8 @@
 /contentModel.xml
 /projectSettingsUpdater.xml
 # Datasource local storage ignored files
-/../../../../../../../../../../../:\Users\engelis\source\repos\GitHub\andrisengelis\Melodija\.idea\.idea.Melodija\.idea/dataSources/
+/dataSources/
 /dataSources.local.xml
+/dataSources.xml
 # Editor-based HTTP Client requests
 /httpRequests/
