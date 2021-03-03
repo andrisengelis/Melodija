@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Melodija.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Melodija.Data
 {
@@ -8,5 +9,7 @@ namespace Melodija.Data
     {
       
     }
+
+    private DbSet<Artist> Artists { get; set; }
   }
 }

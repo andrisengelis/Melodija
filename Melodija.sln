@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Melodija.api", "Melodija.ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Melodija.Data", "Melodija.Data\Melodija.Data.csproj", "{4E1EA186-A319-499E-B998-EA2164FDA2C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Melodija.Domain", "Melodija.Domain\Melodija.Domain.csproj", "{81093EEB-6B5B-4490-9FBC-27048F1E1E17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{4E1EA186-A319-499E-B998-EA2164FDA2C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E1EA186-A319-499E-B998-EA2164FDA2C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E1EA186-A319-499E-B998-EA2164FDA2C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81093EEB-6B5B-4490-9FBC-27048F1E1E17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81093EEB-6B5B-4490-9FBC-27048F1E1E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81093EEB-6B5B-4490-9FBC-27048F1E1E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81093EEB-6B5B-4490-9FBC-27048F1E1E17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
