@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 using Melodija.Contracts;
 using Melodija.Data;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +18,11 @@ namespace Melodija.Repository
 
     public IQueryable<T> FindAll(bool trackChanges) =>
       trackChanges ? _melodijaContext.Set<T>() : _melodijaContext.Set<T>().AsNoTracking();
+
+    public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges) =>
+      trackChanges
+        ? _melodijaContext.Set<T>().Where(expression)
+        : _melodijaContext.Set<T>().Where(expression).AsNoTracking();
 
     public void Create(T entity) => _melodijaContext.Set<T>().Add(entity);
 

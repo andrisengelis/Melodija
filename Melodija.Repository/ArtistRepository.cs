@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Melodija.Contracts;
 using Melodija.Data;
@@ -14,5 +15,8 @@ namespace Melodija.Repository
     
     public IEnumerable<Artist> GetAllArtists(bool trackChanges)=>
       FindAll(trackChanges).OrderBy(a => a.SortName).ToList();
+
+    public Artist GetArtist(Guid artistId, bool trackChanges) =>
+      FindByCondition(a => a.Id.Equals(artistId), trackChanges).SingleOrDefault();
   }
 }
