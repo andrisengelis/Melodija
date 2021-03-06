@@ -7,6 +7,7 @@ namespace Melodija.Repository
   {
     private readonly MelodijaContext _melodijaContext;
     private ArtistRepository _artistRepository;
+    private AlbumRepository _albumRepository;
 
     public RepositoryManager(MelodijaContext melodijaContext)
     {
@@ -25,7 +26,19 @@ namespace Melodija.Repository
       }
     }
 
+    public IAlbumRepository Album
+    {
+      get
+      {
+        if (_albumRepository == null)
+        {
+          _albumRepository = new AlbumRepository(_melodijaContext);
+        }
+
+        return _albumRepository;
+      }
+    }
+
     public void Save() => _melodijaContext.SaveChanges();
   }
-
 }
