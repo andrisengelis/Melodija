@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
+using AutoMapper;
 using Melodija.Contracts;
 using Melodija.Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,12 @@ namespace Melodija.api.Controllers
   public class ArtistsController : ControllerBase
   {
     private readonly IRepositoryManager _repository;
+    private readonly IMapper _mapper;
 
-    public ArtistsController(IRepositoryManager repository)
+    public ArtistsController(IRepositoryManager repository, IMapper mapper)
     {
       _repository = repository;
+      _mapper = mapper;
     }
     
     [HttpGet]
@@ -24,12 +27,7 @@ namespace Melodija.api.Controllers
       {
         var artists = _repository.Artist.GetAllArtists(false);
 
-        var artistsDto = artists.Select(a => new ArtistDto
-        {
-          Id = a.Id,
-          Name = a.Name,
-          SortName = a.SortName
-        }).ToList();
+        var artistsDto = _mapper.Map<IEnumerable<ArtistDto>>(artists);
         
         return Ok(artistsDto);
       }
