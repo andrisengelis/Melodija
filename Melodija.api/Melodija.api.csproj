@@ -16,6 +16,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Melodija.Contracts\Melodija.Contracts.csproj" />
         <ProjectReference Include="..\Melodija.Data\Melodija.Data.csproj" />
+        <ProjectReference Include="..\Melodija.Repository\Melodija.Repository.csproj" />
     </ItemGroup>
 
 </Project>
