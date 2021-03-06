@@ -1,5 +1,7 @@
-﻿using Melodija.Contracts;
+﻿using System.Linq;
+using Melodija.Contracts;
 using Melodija.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Melodija.Repository
 {
@@ -11,6 +13,9 @@ namespace Melodija.Repository
     {
       _melodijaContext = melodijaContext;
     }
+
+    public IQueryable<T> FindAll(bool trackChanges) =>
+      trackChanges ? _melodijaContext.Set<T>() : _melodijaContext.Set<T>().AsNoTracking();
 
     public void Create(T entity) => _melodijaContext.Set<T>().Add(entity);
 
