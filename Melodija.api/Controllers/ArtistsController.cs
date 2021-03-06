@@ -36,5 +36,27 @@ namespace Melodija.api.Controllers
         return StatusCode(500, "Internal server error");
       }
     }
+
+    [HttpGet("{id}")]
+    public IActionResult GetArtist(Guid id)
+    {
+      try
+      {
+        var artist = _repository.Artist.GetArtist(id, false);
+        if (artist == null)
+        {
+          return NotFound();
+        }
+        else
+        {
+          var artistDto = _mapper.Map<ArtistDto>(artist);
+          return Ok(artist);
+        }
+      }
+      catch (Exception e)
+      {
+        return StatusCode(500, "Internal server error");
+      }
+    }
   }
 }
