@@ -1,18 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Melodija.Data;
+using Melodija.api.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using AutoMapper;
 
 namespace Melodija.api
 {
@@ -28,8 +21,9 @@ namespace Melodija.api
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddDbContext<MelodijaContext>(o =>
-        o.UseSqlServer(Configuration["Melodija:ConnectionString"]));
+      services.AddAutoMapper(typeof(Startup));
+      services.ConfigureSqlContext(Configuration);
+      services.ConfigureRepositoryManager();
       services.AddControllers();
       services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Melodija.api", Version = "v1"}); });
     }

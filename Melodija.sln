@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Melodija.Data", "Melodija.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Melodija.Domain", "Melodija.Domain\Melodija.Domain.csproj", "{81093EEB-6B5B-4490-9FBC-27048F1E1E17}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Melodija.Repository", "Melodija.Repository\Melodija.Repository.csproj", "{96701A26-17B6-4E20-BA82-F1BF90D08B87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Melodija.Contracts", "Melodija.Contracts\Melodija.Contracts.csproj", "{1E334035-CEB3-4A4E-9DD8-24EF2DF61923}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{81093EEB-6B5B-4490-9FBC-27048F1E1E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81093EEB-6B5B-4490-9FBC-27048F1E1E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81093EEB-6B5B-4490-9FBC-27048F1E1E17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96701A26-17B6-4E20-BA82-F1BF90D08B87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96701A26-17B6-4E20-BA82-F1BF90D08B87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96701A26-17B6-4E20-BA82-F1BF90D08B87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96701A26-17B6-4E20-BA82-F1BF90D08B87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E334035-CEB3-4A4E-9DD8-24EF2DF61923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E334035-CEB3-4A4E-9DD8-24EF2DF61923}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E334035-CEB3-4A4E-9DD8-24EF2DF61923}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E334035-CEB3-4A4E-9DD8-24EF2DF61923}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
