@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections;
+using AutoMapper;
 using Melodija.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +18,21 @@ namespace Melodija.api.Controllers
       _repository = repository;
       _mapper = mapper;
     }
-    
-    
+
+    [HttpGet]
+    public IActionResult GetAlbumsForArtist(Guid artistId)
+    {
+      var artist = _repository.Artist.GetArtist(artistId,false);
+      if (artist == null)
+      {
+        return NotFound();
+      }
+      else
+      {
+        var albums = _repository.Album.GetAlbums(artistId, false);
+
+        return Ok(albums);
+      }
+    }
   }
 }
