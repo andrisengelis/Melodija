@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Melodija.Domain
 {
@@ -7,5 +8,7 @@ namespace Melodija.Domain
     public Guid Id { get; set; }
     public string Name { get; set; }
     public string SortName { get; set; }
+
+    private IEnumerable<Release> Releases { get; set; }
   }
 }

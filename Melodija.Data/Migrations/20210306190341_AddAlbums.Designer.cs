@@ -4,14 +4,16 @@ using Melodija.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Melodija.Data.Migrations
 {
     [DbContext(typeof(MelodijaContext))]
-    partial class MelodijaContextModelSnapshot : ModelSnapshot
+    [Migration("20210306190341_AddAlbums")]
+    partial class AddAlbums
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,24 +21,7 @@ namespace Melodija.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Melodija.Domain.Artist", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SortName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Artists");
-                });
-
-            modelBuilder.Entity("Melodija.Domain.Release", b =>
+            modelBuilder.Entity("Melodija.Domain.Album", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -55,10 +40,27 @@ namespace Melodija.Data.Migrations
 
                     b.HasIndex("ArtistId");
 
-                    b.ToTable("Releases");
+                    b.ToTable("Albums");
                 });
 
-            modelBuilder.Entity("Melodija.Domain.Release", b =>
+            modelBuilder.Entity("Melodija.Domain.Artist", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SortName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Artists");
+                });
+
+            modelBuilder.Entity("Melodija.Domain.Album", b =>
                 {
                     b.HasOne("Melodija.Domain.Artist", "Artist")
                         .WithMany()

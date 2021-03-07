@@ -4,14 +4,16 @@ using Melodija.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Melodija.Data.Migrations
 {
     [DbContext(typeof(MelodijaContext))]
-    partial class MelodijaContextModelSnapshot : ModelSnapshot
+    [Migration("20210307145543_RenameAlbumsToReleases")]
+    partial class RenameAlbumsToReleases
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

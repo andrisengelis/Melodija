@@ -8,6 +8,7 @@ namespace Melodija.api
     public MappingProfile()
     {
       CreateMap<Artist, ArtistDto>();
+      CreateMap<Release, ReleaseDto>();
     }
   }
 }
