@@ -11,6 +11,6 @@ namespace Melodija.Data
     }
 
     private DbSet<Artist> Artists { get; set; }
-    private DbSet<Album> Albums { get; set; }
+    private DbSet<Release> Releases { get; set; }
   }
 }

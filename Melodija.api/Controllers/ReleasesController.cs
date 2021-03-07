@@ -7,21 +7,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Melodija.api.Controllers
 {
-  [Route("api/artists/{artistId}/albums")]
+  [Route("api/artists/{artistId}/releases")]
   [ApiController]
-  public class AlbumsController : ControllerBase
+  public class ReleasesController : ControllerBase
   {
     private readonly IRepositoryManager _repository;
     private readonly IMapper _mapper;
 
-    public AlbumsController(IRepositoryManager repository, IMapper mapper)
+    public ReleasesController(IRepositoryManager repository, IMapper mapper)
     {
       _repository = repository;
       _mapper = mapper;
     }
 
     [HttpGet]
-    public IActionResult GetAlbumsForArtist(Guid artistId)
+    public IActionResult GetReleasesForArtist(Guid artistId)
     {
       var artist = _repository.Artist.GetArtist(artistId,false);
       
@@ -31,11 +31,11 @@ namespace Melodija.api.Controllers
       }
       else
       {
-        var albumsFromDb = _repository.Album.GetAlbums(artistId, false);
+        var releasesFromDb = _repository.Release.GetReleases(artistId, false);
 
-        var albumsDto = _mapper.Map<IEnumerable<AlbumDto>>(albumsFromDb);
+        var releasesDto = _mapper.Map<IEnumerable<ReleaseDto>>(releasesFromDb);
 
-        return Ok(albumsDto);
+        return Ok(releasesDto);
       }
     }
   }

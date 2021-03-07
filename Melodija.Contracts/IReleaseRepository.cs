@@ -4,8 +4,8 @@ using Melodija.Domain;
 
 namespace Melodija.Contracts
 {
-  public interface IAlbumRepository
+  public interface IReleaseRepository
   {
-    IEnumerable<Album> GetAlbums(Guid artistId, bool trackChanges);
+    IEnumerable<Release> GetReleases(Guid artistId, bool trackChanges);
   }
 }

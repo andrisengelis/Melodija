@@ -2,7 +2,7 @@
 
 namespace Melodija.Domain
 {
-  public class AlbumDto
+  public class ReleaseDto
   {
     public Guid Id { get; set; }
     public string Title { get; set; }
