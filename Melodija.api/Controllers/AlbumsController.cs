@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 using AutoMapper;
 using Melodija.Contracts;
+using Melodija.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Melodija.api.Controllers
@@ -23,15 +24,18 @@ namespace Melodija.api.Controllers
     public IActionResult GetAlbumsForArtist(Guid artistId)
     {
       var artist = _repository.Artist.GetArtist(artistId,false);
+      
       if (artist == null)
       {
         return NotFound();
       }
       else
       {
-        var albums = _repository.Album.GetAlbums(artistId, false);
+        var albumsFromDb = _repository.Album.GetAlbums(artistId, false);
 
-        return Ok(albums);
+        var albumsDto = _mapper.Map<IEnumerable<AlbumDto>>(albumsFromDb);
+
+        return Ok(albumsDto);
       }
     }
   }
