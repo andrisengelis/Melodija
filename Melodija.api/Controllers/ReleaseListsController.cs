@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Melodija.api.Controllers
 {
+  [Route("api/releaselists")]
+  [ApiController]
   public class ReleaseListsController : ControllerBase 
   {
     private readonly IRepositoryManager _repository;
