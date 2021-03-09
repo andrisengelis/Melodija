@@ -8,6 +8,7 @@ namespace Melodija.Repository
     private readonly MelodijaContext _melodijaContext;
     private ArtistRepository _artistRepository;
     private ReleaseRepository _releaseRepository;
+    private ReleaseListRepository _releaseListRepository;
 
     public RepositoryManager(MelodijaContext melodijaContext)
     {
@@ -36,6 +37,19 @@ namespace Melodija.Repository
         }
 
         return _releaseRepository;
+      }
+    }
+
+    public IReleaseListRepository ReleaseList
+    {
+      get
+      {
+        if (_releaseListRepository == null)
+        {
+          _releaseListRepository = new ReleaseListRepository(_melodijaContext);
+        }
+
+        return _releaseListRepository;
       }
     }
 
