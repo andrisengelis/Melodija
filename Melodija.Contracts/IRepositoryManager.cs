@@ -6,6 +6,7 @@ namespace Melodija.Contracts
   {
     IArtistRepository Artist { get; }
     IReleaseRepository Release { get; }
+    IReleaseListRepository ReleaseList { get; }
     void Save();
   }
 }
