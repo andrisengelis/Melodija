@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using Melodija.Contracts;
+using Melodija.Domain;
 using Melodija.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,9 +24,11 @@ namespace Melodija.api.Controllers
     {
       try
       {
-        var releaseLists = _repository.ReleaseList.GetAllReleaseLists(false);
+        var releaseListsFromDb = _repository.ReleaseList.GetAllReleaseLists(false);
+
+        var releaseListsDto = _mapper.Map<IEnumerable<ReleaseList>>(releaseListsFromDb);
         
-        return Ok(releaseLists);
+        return Ok(releaseListsDto);
       }
       catch (Exception e)
       {
