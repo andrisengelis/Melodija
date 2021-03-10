@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using Melodija.Contracts;
 using Melodija.Domain;
+using Melodija.Domain.DataTransferObjects;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Melodija.api.Controllers

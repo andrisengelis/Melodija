@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections;
 
-namespace Melodija.Domain
+namespace Melodija.Domain.Models
 {
   public class ReleaseListItem
   {

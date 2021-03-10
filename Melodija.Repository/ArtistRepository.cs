@@ -4,6 +4,7 @@ using System.Linq;
 using Melodija.Contracts;
 using Melodija.Data;
 using Melodija.Domain;
+using Melodija.Domain.Models;
 
 namespace Melodija.Repository
 {

@@ -1,4 +1,5 @@
 ﻿using Melodija.Domain;
+using Melodija.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Melodija.Data

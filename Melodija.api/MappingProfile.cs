@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Melodija.Domain;
+using Melodija.Domain.DataTransferObjects;
+using Melodija.Domain.Models;
 
 namespace Melodija.api
 {
