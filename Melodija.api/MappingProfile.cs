@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Melodija.Domain;
+using Melodija.Domain.DataTransferObjects;
+using Melodija.Domain.Models;
 
 namespace Melodija.api
 {
@@ -8,6 +10,7 @@ namespace Melodija.api
     public MappingProfile()
     {
       CreateMap<Artist, ArtistDto>();
+      CreateMap<ArtistForCreationDto, Artist>();
       CreateMap<Release, ReleaseDto>();
       CreateMap<ReleaseList, ReleaseListDto>();
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using Melodija.Contracts;
 using Melodija.Data;
 using Melodija.Domain;
+using Melodija.Domain.Models;
 
 namespace Melodija.Repository
 {
@@ -18,5 +19,7 @@ namespace Melodija.Repository
 
     public Artist GetArtist(Guid artistId, bool trackChanges) =>
       FindByCondition(a => a.Id.Equals(artistId), trackChanges).SingleOrDefault();
+
+    public void CreateArtist(Artist artist) => Create(artist);
   }
 }

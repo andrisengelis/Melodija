@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Melodija.Domain
+namespace Melodija.Domain.Models
 {
   public class Release
   {

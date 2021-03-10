@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Melodija.Domain
+namespace Melodija.Domain.Models
 {
   public class Artist
   {

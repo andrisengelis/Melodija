@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Melodija.Domain;
+using Melodija.Domain.Models;
 
 namespace Melodija.Contracts
 {
@@ -8,5 +9,6 @@ namespace Melodija.Contracts
   {
     IEnumerable<Artist> GetAllArtists(bool trackChanges);
     Artist GetArtist(Guid artistId, bool trackChanges);
+    void CreateArtist(Artist artist);
   }
 }
