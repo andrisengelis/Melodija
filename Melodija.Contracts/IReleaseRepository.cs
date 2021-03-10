@@ -8,6 +8,7 @@ namespace Melodija.Contracts
   public interface IReleaseRepository
   {
     IEnumerable<Release> GetReleases(Guid artistId, bool trackChanges);
+    Release GetRelease(Guid artistId, Guid id, bool trackChanges);
     void CreateReleaseForArtist(Guid artistId, Release release);
   }
 }

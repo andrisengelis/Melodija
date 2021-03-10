@@ -41,6 +41,25 @@ namespace Melodija.api.Controllers
       }
     }
 
+    [HttpGet("{id}", Name="GetReleaseForArtist")]
+    public IActionResult GetReleaseForArtist(Guid artistId, Guid id)
+    {
+      var artist = _repository.Artist.GetArtist(artistId, false);
+      if (artist == null)
+      {
+        return NotFound();
+      }
+
+      var releaseDb = _repository.Release.GetRelease(artistId, id, false);
+      if (releaseDb == null)
+      {
+        return NotFound();
+      }
+
+      var release = _mapper.Map<ReleaseDto>(releaseDb);
+      return Ok(release);
+    }
+
     [HttpPost]
     public IActionResult CreateReleaseForArtist(Guid artistId, [FromBody] ReleaseForCreationDto release)
     {
