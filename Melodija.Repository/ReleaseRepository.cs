@@ -17,5 +17,11 @@ namespace Melodija.Repository
 
     IEnumerable<Release> IReleaseRepository.GetReleases(Guid artistId, bool trackChanges) =>
       FindByCondition(a => a.ArtistId.Equals(artistId), trackChanges).OrderBy(a => a.SortTitle);
+
+    public void CreateReleaseForArtist(Guid artistId, Release release)
+    {
+      release.ArtistId = artistId;
+      Create(release);
+    }
   }
 }
