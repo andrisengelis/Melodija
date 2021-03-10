@@ -10,6 +10,7 @@ namespace Melodija.api
     public MappingProfile()
     {
       CreateMap<Artist, ArtistDto>();
+      CreateMap<ArtistForCreationDto, Artist>();
       CreateMap<Release, ReleaseDto>();
       CreateMap<ReleaseList, ReleaseListDto>();
     }

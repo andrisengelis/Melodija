@@ -4,6 +4,7 @@ using AutoMapper;
 using Melodija.Contracts;
 using Melodija.Domain;
 using Melodija.Domain.DataTransferObjects;
+using Melodija.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Melodija.api.Controllers
@@ -58,6 +59,23 @@ namespace Melodija.api.Controllers
       {
         return StatusCode(500, "Internal server error");
       }
+    }
+
+    [HttpPost()]
+    public IActionResult CreateArtist([FromBody]ArtistForCreationDto artist)
+    {
+      if (artist == null)
+      {
+        return BadRequest("Artist object is null");
+      }
+
+      var artistEntity = _mapper.Map<Artist>(artist);
+      _repository.Artist.CreateArtist(artistEntity);
+      _repository.Save();
+
+      var artistToReturn = _mapper.Map<ArtistDto>(artistEntity);
+
+      return CreatedAtRoute("ArtistById", new {id = artistToReturn.Id}, artistToReturn);
     }
   }
 }

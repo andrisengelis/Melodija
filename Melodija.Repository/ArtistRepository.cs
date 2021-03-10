@@ -19,5 +19,7 @@ namespace Melodija.Repository
 
     public Artist GetArtist(Guid artistId, bool trackChanges) =>
       FindByCondition(a => a.Id.Equals(artistId), trackChanges).SingleOrDefault();
+
+    public void CreateArtist(Artist artist) => Create(artist);
   }
 }
