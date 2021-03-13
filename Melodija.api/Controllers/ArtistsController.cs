@@ -54,7 +54,7 @@ namespace Melodija.api.Controllers
         else
         {
           var artistDto = _mapper.Map<ArtistDto>(artist);
-          return Ok(artist);
+          return Ok(artistDto);
         }
       }
       catch (Exception e)
