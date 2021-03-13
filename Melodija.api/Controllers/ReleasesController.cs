@@ -4,6 +4,7 @@ using AutoMapper;
 using Melodija.Contracts;
 using Melodija.Domain.DataTransferObjects;
 using Melodija.Domain.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Melodija.api.Controllers
@@ -127,6 +128,37 @@ namespace Melodija.api.Controllers
       _mapper.Map(release, releaseEntity);
       _repository.Save();
 
+      return NoContent();
+    }
+
+    [HttpPatch("{id}")]
+    public IActionResult PartiallyUpdateReleaseForArtist(Guid artistId, Guid id,
+      [FromBody] JsonPatchDocument<ReleaseForUpdateDto> patchDoc)
+    {
+      if (patchDoc == null)
+      {
+        return BadRequest("patchDoc object is null");
+      }
+
+      var artist = _repository.Artist.GetArtist(artistId, false);
+
+      if (artist == null)
+      {
+        return NotFound();
+      }
+
+      var releaseEntity = _repository.Release.GetRelease(artistId, id, true);
+      if (releaseEntity == null)
+      {
+        return NotFound();
+      }
+
+      var releaseEntityToPatch = _mapper.Map<ReleaseForUpdateDto>(releaseEntity);
+      patchDoc.ApplyTo(releaseEntityToPatch);
+
+      _mapper.Map(releaseEntityToPatch, releaseEntity);
+      
+      _repository.Save();
       return NoContent();
     }
   }

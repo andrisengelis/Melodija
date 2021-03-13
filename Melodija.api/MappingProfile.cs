@@ -14,7 +14,7 @@ namespace Melodija.api
       CreateMap<ArtistForUpdateDto, Artist>();
       CreateMap<Release, ReleaseDto>();
       CreateMap<ReleaseForCreationDto, Release>();
-      CreateMap<ReleaseForUpdateDto,Release>();
+      CreateMap<ReleaseForUpdateDto, Release>().ReverseMap();
       CreateMap<ReleaseList, ReleaseListDto>();
     }
   }
