@@ -5,7 +5,6 @@ using Melodija.Contracts;
 using Melodija.Domain.DataTransferObjects;
 using Melodija.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.FileProviders;
 
 namespace Melodija.api.Controllers
 {
