@@ -54,7 +54,7 @@ namespace Melodija.api.Controllers
         else
         {
           var artistDto = _mapper.Map<ArtistDto>(artist);
-          return Ok(artist);
+          return Ok(artistDto);
         }
       }
       catch (Exception e)
@@ -134,6 +134,27 @@ namespace Melodija.api.Controllers
       }
 
       _repository.Artist.DeleteArtist(artist);
+      _repository.Save();
+
+      return NoContent();
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult UpdateArtist(Guid id, [FromBody] ArtistForUpdateDto artist)
+    {
+      if (artist == null)
+      {
+        return BadRequest("ArtistForUpdateDto object is null");
+      }
+
+      var artistEntity = _repository.Artist.GetArtist(id, true);
+
+      if (artistEntity == null)
+      {
+        return NotFound();
+      }
+
+      _mapper.Map(artist, artistEntity);
       _repository.Save();
 
       return NoContent();

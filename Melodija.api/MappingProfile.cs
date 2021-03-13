@@ -11,8 +11,10 @@ namespace Melodija.api
     {
       CreateMap<Artist, ArtistDto>();
       CreateMap<ArtistForCreationDto, Artist>();
+      CreateMap<ArtistForUpdateDto, Artist>();
       CreateMap<Release, ReleaseDto>();
       CreateMap<ReleaseForCreationDto, Release>();
+      CreateMap<ReleaseForUpdateDto,Release>();
       CreateMap<ReleaseList, ReleaseListDto>();
     }
   }
