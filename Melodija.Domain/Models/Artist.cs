@@ -9,6 +9,6 @@ namespace Melodija.Domain.Models
     public string Name { get; set; }
     public string SortName { get; set; }
 
-    private IEnumerable<Release> Releases { get; set; }
+    public IEnumerable<Release> Releases { get; set; }
   }
 }
