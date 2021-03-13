@@ -26,5 +26,10 @@ namespace Melodija.Repository
       release.ArtistId = artistId;
       Create(release);
     }
+
+    public void DeleteRelease(Release release)
+    {
+      Delete(release);
+    }
   }
 }

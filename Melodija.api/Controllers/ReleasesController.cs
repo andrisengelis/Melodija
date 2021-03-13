@@ -5,6 +5,7 @@ using Melodija.Contracts;
 using Melodija.Domain.DataTransferObjects;
 using Melodija.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 
 namespace Melodija.api.Controllers
 {
@@ -80,6 +81,27 @@ namespace Melodija.api.Controllers
 
       var releaseToReturn = _mapper.Map<ReleaseDto>(releaseEntity);
       return CreatedAtRoute("GetReleaseForArtist", new {artistId, id = releaseToReturn.Id}, releaseToReturn);
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteReleaseForArtist(Guid artistId, Guid id)
+    {
+      var artist = _repository.Artist.GetArtist(artistId, false);
+      if (artist == null)
+      {
+        return NotFound();
+      }
+
+      var releaseForArtist = _repository.Release.GetRelease(artistId, id, false);
+      if (releaseForArtist == null)
+      {
+        return NotFound();
+      }
+      
+      _repository.Release.DeleteRelease(releaseForArtist);
+      _repository.Save();
+
+      return NoContent();
     }
   }
 }

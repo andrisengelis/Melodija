@@ -23,7 +23,7 @@ namespace Melodija.api.Controllers
       _repository = repository;
       _mapper = mapper;
     }
-    
+
     [HttpGet]
     public IActionResult GetArtists()
     {
@@ -32,7 +32,7 @@ namespace Melodija.api.Controllers
         var artists = _repository.Artist.GetAllArtists(false);
 
         var artistsDto = _mapper.Map<IEnumerable<ArtistDto>>(artists);
-        
+
         return Ok(artistsDto);
       }
       catch (Exception e)
@@ -64,7 +64,8 @@ namespace Melodija.api.Controllers
     }
 
     [HttpGet("collection/({ids})", Name = "ArtistCollection")]
-    public IActionResult GetArtistCollection([ModelBinder(BinderType=typeof(ArrayModelBinder))] IEnumerable<Guid> ids)
+    public IActionResult GetArtistCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))]
+      IEnumerable<Guid> ids)
     {
       if (ids == null)
       {
@@ -83,7 +84,7 @@ namespace Melodija.api.Controllers
     }
 
     [HttpPost()]
-    public IActionResult CreateArtist([FromBody]ArtistForCreationDto artist)
+    public IActionResult CreateArtist([FromBody] ArtistForCreationDto artist)
     {
       if (artist == null)
       {
@@ -113,13 +114,29 @@ namespace Melodija.api.Controllers
       {
         _repository.Artist.CreateArtist(artist);
       }
-      
+
       _repository.Save();
 
       var artistCollectionToReturn = _mapper.Map<IEnumerable<ArtistDto>>(artistEntities);
       var ids = string.Join(",", artistCollectionToReturn.Select(a => a.Id));
 
       return CreatedAtRoute("ArtistCollection", new {ids}, artistCollectionToReturn);
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteArtist(Guid id)
+    {
+      var artist = _repository.Artist.GetArtist(id, false);
+
+      if (artist == null)
+      {
+        return NotFound();
+      }
+
+      _repository.Artist.DeleteArtist(artist);
+      _repository.Save();
+
+      return NoContent();
     }
   }
 }
