@@ -20,6 +20,9 @@ namespace Melodija.Repository
     public Artist GetArtist(Guid artistId, bool trackChanges) =>
       FindByCondition(a => a.Id.Equals(artistId), trackChanges).SingleOrDefault();
 
+    public IEnumerable<Artist> GetByIds(IEnumerable<Guid> ids, bool trackChanges) =>
+      FindByCondition(a => ids.Contains(a.Id), trackChanges).ToList();
+
     public void CreateArtist(Artist artist) => Create(artist);
   }
 }

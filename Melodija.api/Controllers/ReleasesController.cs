@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using AutoMapper;
 using Melodija.Contracts;
-using Melodija.Domain;
 using Melodija.Domain.DataTransferObjects;
 using Melodija.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
