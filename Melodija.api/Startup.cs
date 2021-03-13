@@ -25,7 +25,11 @@ namespace Melodija.api
       services.AddAutoMapper(typeof(Startup));
       services.ConfigureSqlContext(Configuration);
       services.ConfigureRepositoryManager();
-      services.AddControllers();
+      services.AddControllers(config =>
+      {
+        config.RespectBrowserAcceptHeader = true;
+        config.ReturnHttpNotAcceptable = true;
+      }).AddNewtonsoftJson();
       services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Melodija.api", Version = "v1"}); });
     }
 
