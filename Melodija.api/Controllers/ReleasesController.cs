@@ -24,8 +24,8 @@ namespace Melodija.api.Controllers
     [HttpGet]
     public IActionResult GetReleasesForArtist(Guid artistId)
     {
-      var artist = _repository.Artist.GetArtist(artistId,false);
-      
+      var artist = _repository.Artist.GetArtist(artistId, false);
+
       if (artist == null)
       {
         return NotFound();
@@ -40,7 +40,7 @@ namespace Melodija.api.Controllers
       }
     }
 
-    [HttpGet("{id}", Name="GetReleaseForArtist")]
+    [HttpGet("{id}", Name = "GetReleaseForArtist")]
     public IActionResult GetReleaseForArtist(Guid artistId, Guid id)
     {
       var artist = _repository.Artist.GetArtist(artistId, false);
@@ -66,7 +66,7 @@ namespace Melodija.api.Controllers
       {
         return BadRequest("ReleaseForCreationDto object is null");
       }
-      
+
       var artist = _repository.Artist.GetArtist(artistId, false);
       if (artist == null)
       {
@@ -74,7 +74,7 @@ namespace Melodija.api.Controllers
       }
 
       var releaseEntity = _mapper.Map<Release>(release);
-      
+
       _repository.Release.CreateReleaseForArtist(artistId, releaseEntity);
       _repository.Save();
 
@@ -96,8 +96,35 @@ namespace Melodija.api.Controllers
       {
         return NotFound();
       }
-      
+
       _repository.Release.DeleteRelease(releaseForArtist);
+      _repository.Save();
+
+      return NoContent();
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult UpdateReleaseForArtist(Guid artistId, Guid id, [FromBody] ReleaseForUpdateDto release)
+    {
+      if (release == null)
+      {
+        return BadRequest("ReleaseForUnpdateDto object is null");
+      }
+
+      var artist = _repository.Artist.GetArtist(artistId, false);
+
+      if (artist == null)
+      {
+        return NotFound();
+      }
+
+      var releaseEntity = _repository.Release.GetRelease(artistId, id, true);
+      if (releaseEntity == null)
+      {
+        return NotFound();
+      }
+
+      _mapper.Map(release, releaseEntity);
       _repository.Save();
 
       return NoContent();
