@@ -10,5 +10,6 @@ namespace Melodija.Contracts
     IEnumerable<Release> GetReleases(Guid artistId, bool trackChanges);
     Release GetRelease(Guid artistId, Guid id, bool trackChanges);
     void CreateReleaseForArtist(Guid artistId, Release release);
+    void DeleteRelease(Release release);
   }
 }

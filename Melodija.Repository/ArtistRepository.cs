@@ -13,8 +13,8 @@ namespace Melodija.Repository
     public ArtistRepository(MelodijaContext melodijaContext) : base(melodijaContext)
     {
     }
-    
-    public IEnumerable<Artist> GetAllArtists(bool trackChanges)=>
+
+    public IEnumerable<Artist> GetAllArtists(bool trackChanges) =>
       FindAll(trackChanges).OrderBy(a => a.SortName).ToList();
 
     public Artist GetArtist(Guid artistId, bool trackChanges) =>
@@ -24,5 +24,10 @@ namespace Melodija.Repository
       FindByCondition(a => ids.Contains(a.Id), trackChanges).ToList();
 
     public void CreateArtist(Artist artist) => Create(artist);
+
+    public void DeleteArtist(Artist artist)
+    {
+      Delete(artist);
+    }
   }
 }
