@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Melodija.Contracts;
 using Melodija.Domain;
 using Melodija.Domain.DataTransferObjects;
 using Melodija.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 
 namespace Melodija.api.Controllers
 {
@@ -61,6 +63,25 @@ namespace Melodija.api.Controllers
       }
     }
 
+    [HttpGet("collection/({ids})", Name = "ArtistCollection")]
+    public IActionResult GetArtistCollection([ModelBinder(BinderType=typeof(ArrayModelBinder))] IEnumerable<Guid> ids)
+    {
+      if (ids == null)
+      {
+        return BadRequest("Parameter ids is null");
+      }
+
+      var artistEntities = _repository.Artist.GetByIds(ids, false);
+
+      if (ids.Count() != artistEntities.Count())
+      {
+        return NotFound();
+      }
+
+      var artistsToReturn = _mapper.Map<IEnumerable<ArtistDto>>(artistEntities);
+      return Ok(artistsToReturn);
+    }
+
     [HttpPost()]
     public IActionResult CreateArtist([FromBody]ArtistForCreationDto artist)
     {
@@ -76,6 +97,29 @@ namespace Melodija.api.Controllers
       var artistToReturn = _mapper.Map<ArtistDto>(artistEntity);
 
       return CreatedAtRoute("ArtistById", new {id = artistToReturn.Id}, artistToReturn);
+    }
+
+    [HttpPost("collection")]
+    public IActionResult CreateArtistCollection([FromBody] IEnumerable<ArtistForCreationDto> artistCollection)
+    {
+      if (artistCollection == null)
+      {
+        return BadRequest("Artist collection is null");
+      }
+
+      var artistEntities = _mapper.Map<IEnumerable<Artist>>(artistCollection);
+
+      foreach (var artist in artistEntities)
+      {
+        _repository.Artist.CreateArtist(artist);
+      }
+      
+      _repository.Save();
+
+      var artistCollectionToReturn = _mapper.Map<IEnumerable<ArtistDto>>(artistEntities);
+      var ids = string.Join(",", artistCollectionToReturn.Select(a => a.Id));
+
+      return CreatedAtRoute("ArtistCollection", new {ids}, artistCollectionToReturn);
     }
   }
 }

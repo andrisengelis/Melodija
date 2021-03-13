@@ -9,6 +9,7 @@ namespace Melodija.Contracts
   {
     IEnumerable<Artist> GetAllArtists(bool trackChanges);
     Artist GetArtist(Guid artistId, bool trackChanges);
+    IEnumerable<Artist> GetByIds(IEnumerable<Guid> ids, bool trackChanges);
     void CreateArtist(Artist artist);
   }
 }
