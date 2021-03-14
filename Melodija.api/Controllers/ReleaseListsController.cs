@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using AutoMapper;
 using Melodija.Contracts;
 using Melodija.Data.Migrations;
@@ -27,13 +28,13 @@ namespace Melodija.api.Controllers
     }
 
     [HttpGet, Authorize]
-    public IActionResult GetReleaseLists()
+    public async Task<IActionResult> GetReleaseLists()
     {
       try
       {
         var ownerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-        var releaseListsFromDb = _repository.ReleaseList.GetAllReleaseLists(false).Where(rl => rl.OwnerId == ownerId);
+        var releaseListsFromDb = await _repository.ReleaseList.GetAllReleaseListsByOwnerIdAsync(ownerId, false);
 
         var releaseListsDto = _mapper.Map<IEnumerable<ReleaseListDto>>(releaseListsFromDb);
 
@@ -46,11 +47,11 @@ namespace Melodija.api.Controllers
     }
 
     [HttpGet("{id}", Name = "ReleaseListById"), Authorize]
-    public IActionResult GetReleaseList(Guid id)
+    public async Task<IActionResult> GetReleaseList(Guid id)
     {
       try
       {
-        var releaseList = _repository.ReleaseList.GetReleaseList(id, false);
+        var releaseList = await _repository.ReleaseList.GetReleaseListAsync(id, false);
         if (releaseList == null)
         {
           return NotFound();
@@ -72,7 +73,7 @@ namespace Melodija.api.Controllers
     }
     
     [HttpPost, Authorize]
-    public IActionResult CreateReleaseList([FromBody] ReleaseListForCreateDto releaseList)
+    public async Task<IActionResult> CreateReleaseList([FromBody] ReleaseListForCreateDto releaseList)
     {
       if (releaseList == null)
       {
@@ -85,7 +86,7 @@ namespace Melodija.api.Controllers
       releaseListEntity.OwnerId = ownerId;
 
       _repository.ReleaseList.CreateReleaseList(releaseListEntity);
-      _repository.SaveAsync();
+      await _repository.SaveAsync();
 
       var releaseListToReturn = _mapper.Map<ReleaseListDto>(releaseListEntity);
 

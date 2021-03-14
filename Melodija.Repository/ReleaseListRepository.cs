@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Melodija.Contracts;
 using Melodija.Data;
 using Melodija.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Melodija.Repository
 {
@@ -13,11 +15,11 @@ namespace Melodija.Repository
     {
     }
 
-    public IEnumerable<ReleaseList> GetAllReleaseLists(bool trackChanges) =>
-      FindAll(trackChanges).OrderBy(rl => rl.Title).ToList();
+    public async Task<IEnumerable<ReleaseList>> GetAllReleaseListsByOwnerIdAsync(Guid ownerId, bool trackChanges) =>
+      await FindByCondition(rl => rl.OwnerId.Equals(ownerId), trackChanges).OrderBy(rl => rl.Title).ToListAsync();
 
-    public ReleaseList GetReleaseList(Guid releaseListId, bool trackChanges) =>
-      FindByCondition(rl => rl.Id.Equals(releaseListId), trackChanges).SingleOrDefault();
+    public async Task<ReleaseList> GetReleaseListAsync(Guid releaseListId, bool trackChanges) =>
+      await FindByCondition(rl => rl.Id.Equals(releaseListId), trackChanges).SingleOrDefaultAsync();
 
     public void CreateReleaseList(ReleaseList releaseList) => Create(releaseList);
   }
