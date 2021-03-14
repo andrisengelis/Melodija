@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Melodija.Contracts
 {
@@ -7,6 +8,6 @@ namespace Melodija.Contracts
     IArtistRepository Artist { get; }
     IReleaseRepository Release { get; }
     IReleaseListRepository ReleaseList { get; }
-    void Save();
+    Task SaveAsync();
   }
 }
