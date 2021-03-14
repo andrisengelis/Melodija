@@ -4,6 +4,7 @@ using System.Security.Claims;
 using AutoMapper;
 using Melodija.Contracts;
 using Melodija.Domain;
+using Melodija.Domain.DataTransferObjects;
 using Melodija.Domain.DataTransferObjects.Configuration;
 using Melodija.Domain.Models;
 using Melodija.Repository;
@@ -38,7 +39,7 @@ namespace Melodija.api.Controllers
         
         var releaseListsFromDb = _repository.ReleaseList.GetAllReleaseLists(false);
 
-        var releaseListsDto = _mapper.Map<IEnumerable<ReleaseList>>(releaseListsFromDb);
+        var releaseListsDto = _mapper.Map<IEnumerable<ReleaseListDto>>(releaseListsFromDb);
         
         return Ok(releaseListsDto);
       }
