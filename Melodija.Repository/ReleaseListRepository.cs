@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Melodija.Contracts;
 using Melodija.Data;
-using Melodija.Domain;
 using Melodija.Domain.Models;
 
 namespace Melodija.Repository
@@ -16,5 +16,9 @@ namespace Melodija.Repository
     public IEnumerable<ReleaseList> GetAllReleaseLists(bool trackChanges) =>
       FindAll(trackChanges).OrderBy(rl => rl.Title).ToList();
 
+    public ReleaseList GetReleaseList(Guid releaseListId, bool trackChanges) =>
+      FindByCondition(rl => rl.Id.Equals(releaseListId), trackChanges).SingleOrDefault();
+
+    public void CreateReleaseList(ReleaseList releaseList) => Create(releaseList);
   }
 }
