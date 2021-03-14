@@ -27,6 +27,7 @@ namespace Melodija.api
       services.ConfigureRepositoryManager();
       services.AddAuthentication();
       services.ConfigureIdentity();
+      services.ConfigureJwt(Configuration);
       services.AddControllers(config =>
       {
         config.RespectBrowserAcceptHeader = true;

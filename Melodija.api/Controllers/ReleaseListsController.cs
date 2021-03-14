@@ -5,6 +5,7 @@ using Melodija.Contracts;
 using Melodija.Domain;
 using Melodija.Domain.Models;
 using Melodija.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Melodija.api.Controllers
@@ -22,7 +23,7 @@ namespace Melodija.api.Controllers
       _mapper = mapper;
     }
     
-    [HttpGet]
+    [HttpGet,Authorize]
     public IActionResult GetReleaseLists()
     {
       try
