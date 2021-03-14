@@ -4,14 +4,16 @@ using Melodija.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Melodija.Data.Migrations
 {
     [DbContext(typeof(MelodijaContext))]
-    partial class MelodijaContextModelSnapshot : ModelSnapshot
+    [Migration("20210314105324_CreatingIdentityTables")]
+    partial class CreatingIdentityTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,22 +194,6 @@ namespace Melodija.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "8798c338-95d9-4303-b40d-fb51d5bd6852",
-                            ConcurrencyStamp = "fe546389-b531-4669-8242-f4fe5230a6f1",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
-                        },
-                        new
-                        {
-                            Id = "23be0619-b49e-4608-b158-d676e792d8d1",
-                            ConcurrencyStamp = "5dc47c30-312b-4d5f-b1d6-b11a919c71e6",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

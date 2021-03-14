@@ -25,6 +25,8 @@ namespace Melodija.api
       services.AddAutoMapper(typeof(Startup));
       services.ConfigureSqlContext(Configuration);
       services.ConfigureRepositoryManager();
+      services.AddAuthentication();
+      services.ConfigureIdentity();
       services.AddControllers(config =>
       {
         config.RespectBrowserAcceptHeader = true;
@@ -47,6 +49,7 @@ namespace Melodija.api
 
       app.UseRouting();
 
+      app.UseAuthentication();
       app.UseAuthorization();
 
       app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
