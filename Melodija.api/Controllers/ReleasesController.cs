@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Melodija.Contracts;
 using Melodija.Domain.DataTransferObjects;
@@ -23,9 +24,9 @@ namespace Melodija.api.Controllers
     }
 
     [HttpGet]
-    public IActionResult GetReleasesForArtist(Guid artistId)
+    public async Task<IActionResult> GetReleasesForArtist(Guid artistId)
     {
-      var artist = _repository.Artist.GetArtist(artistId, false);
+      var artist = await _repository.Artist.GetArtistAsync(artistId, false);
 
       if (artist == null)
       {
@@ -42,9 +43,9 @@ namespace Melodija.api.Controllers
     }
 
     [HttpGet("{id}", Name = "GetReleaseForArtist")]
-    public IActionResult GetReleaseForArtist(Guid artistId, Guid id)
+    public async Task<IActionResult> GetReleaseForArtist(Guid artistId, Guid id)
     {
-      var artist = _repository.Artist.GetArtist(artistId, false);
+      var artist = await _repository.Artist.GetArtistAsync(artistId, false);
       if (artist == null)
       {
         return NotFound();
@@ -61,14 +62,14 @@ namespace Melodija.api.Controllers
     }
 
     [HttpPost]
-    public IActionResult CreateReleaseForArtist(Guid artistId, [FromBody] ReleaseForCreationDto release)
+    public async Task<IActionResult> CreateReleaseForArtist(Guid artistId, [FromBody] ReleaseForCreationDto release)
     {
       if (release == null)
       {
         return BadRequest("ReleaseForCreationDto object is null");
       }
 
-      var artist = _repository.Artist.GetArtist(artistId, false);
+      var artist = await _repository.Artist.GetArtistAsync(artistId, false);
       if (artist == null)
       {
         return NotFound();
@@ -77,16 +78,16 @@ namespace Melodija.api.Controllers
       var releaseEntity = _mapper.Map<Release>(release);
 
       _repository.Release.CreateReleaseForArtist(artistId, releaseEntity);
-      _repository.Save();
+      await _repository.SaveAsync();
 
       var releaseToReturn = _mapper.Map<ReleaseDto>(releaseEntity);
       return CreatedAtRoute("GetReleaseForArtist", new {artistId, id = releaseToReturn.Id}, releaseToReturn);
     }
 
     [HttpDelete("{id}")]
-    public IActionResult DeleteReleaseForArtist(Guid artistId, Guid id)
+    public async Task<IActionResult> DeleteReleaseForArtist(Guid artistId, Guid id)
     {
-      var artist = _repository.Artist.GetArtist(artistId, false);
+      var artist = await _repository.Artist.GetArtistAsync(artistId, false);
       if (artist == null)
       {
         return NotFound();
@@ -99,20 +100,20 @@ namespace Melodija.api.Controllers
       }
 
       _repository.Release.DeleteRelease(releaseForArtist);
-      _repository.Save();
+      await _repository.SaveAsync();
 
       return NoContent();
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateReleaseForArtist(Guid artistId, Guid id, [FromBody] ReleaseForUpdateDto release)
+    public async Task<IActionResult> UpdateReleaseForArtist(Guid artistId, Guid id, [FromBody] ReleaseForUpdateDto release)
     {
       if (release == null)
       {
         return BadRequest("ReleaseForUnpdateDto object is null");
       }
 
-      var artist = _repository.Artist.GetArtist(artistId, false);
+      var artist = await _repository.Artist.GetArtistAsync(artistId, false);
 
       if (artist == null)
       {
@@ -126,13 +127,13 @@ namespace Melodija.api.Controllers
       }
 
       _mapper.Map(release, releaseEntity);
-      _repository.Save();
+      await _repository.SaveAsync();
 
       return NoContent();
     }
 
     [HttpPatch("{id}")]
-    public IActionResult PartiallyUpdateReleaseForArtist(Guid artistId, Guid id,
+    public async Task<IActionResult> PartiallyUpdateReleaseForArtist(Guid artistId, Guid id,
       [FromBody] JsonPatchDocument<ReleaseForUpdateDto> patchDoc)
     {
       if (patchDoc == null)
@@ -140,7 +141,7 @@ namespace Melodija.api.Controllers
         return BadRequest("patchDoc object is null");
       }
 
-      var artist = _repository.Artist.GetArtist(artistId, false);
+      var artist = await _repository.Artist.GetArtistAsync(artistId, false);
 
       if (artist == null)
       {
@@ -158,7 +159,7 @@ namespace Melodija.api.Controllers
 
       _mapper.Map(releaseEntityToPatch, releaseEntity);
       
-      _repository.Save();
+      await _repository.SaveAsync();
       return NoContent();
     }
   }

@@ -1,4 +1,5 @@
-﻿using Melodija.Contracts;
+﻿using System.Threading.Tasks;
+using Melodija.Contracts;
 using Melodija.Data;
 
 namespace Melodija.Repository
@@ -53,6 +54,6 @@ namespace Melodija.Repository
       }
     }
 
-    public void Save() => _melodijaContext.SaveChanges();
+    public Task SaveAsync() => _melodijaContext.SaveChangesAsync();
   }
 }
