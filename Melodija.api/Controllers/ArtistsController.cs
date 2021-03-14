@@ -84,7 +84,7 @@ namespace Melodija.api.Controllers
       return Ok(artistsToReturn);
     }
 
-    [HttpPost()]
+    [HttpPost]
     public async Task<IActionResult> CreateArtist([FromBody] ArtistForCreationDto artist)
     {
       if (artist == null)
