@@ -23,7 +23,7 @@ namespace Melodija.api.Controllers
       _mapper = mapper;
     }
     
-    [HttpGet,Authorize]
+    [HttpGet, Authorize]
     public IActionResult GetReleaseLists()
     {
       try

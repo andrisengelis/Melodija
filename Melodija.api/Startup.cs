@@ -1,11 +1,11 @@
 using Melodija.api.Extensions;
+using Melodija.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using AutoMapper;
 
 namespace Melodija.api
 {
@@ -25,6 +25,7 @@ namespace Melodija.api
       services.AddAutoMapper(typeof(Startup));
       services.ConfigureSqlContext(Configuration);
       services.ConfigureRepositoryManager();
+      services.AddScoped<IAuthenticationManager, Utility.AuthenticationManager>();
       services.AddAuthentication();
       services.ConfigureIdentity();
       services.ConfigureJwt(Configuration);

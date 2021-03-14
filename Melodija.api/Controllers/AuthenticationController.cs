@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
+using Melodija.Contracts;
 using Melodija.Domain.DataTransferObjects.Configuration;
 using Melodija.Domain.Models;
 using Microsoft.AspNetCore.Identity;
@@ -14,11 +15,13 @@ namespace Melodija.api.Controllers
   {
     private readonly UserManager<User> _userManager;
     private readonly IMapper _mapper;
+    private readonly IAuthenticationManager _authManager;
 
-    public AuthenticationController(UserManager<User> userManager, IMapper mapper)
+    public AuthenticationController(UserManager<User> userManager, IMapper mapper, IAuthenticationManager authManager)
     {
       _userManager = userManager;
       _mapper = mapper;
+      _authManager = authManager;
     }
 
     [HttpPost]
@@ -39,6 +42,17 @@ namespace Melodija.api.Controllers
 
       await _userManager.AddToRolesAsync(user, userForRegistrationDto.Roles);
       return StatusCode(201);
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto userForAuthenticationDto)
+    {
+      if (!await _authManager.ValidateUser(userForAuthenticationDto))
+      {
+        return Unauthorized();
+      }
+
+      return Ok(new {Token = await _authManager.CreateToken()});
     }
   }
 }
