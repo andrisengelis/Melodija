@@ -5,6 +5,7 @@ using AutoMapper;
 using Melodija.Contracts;
 using Melodija.Domain.DataTransferObjects;
 using Melodija.Domain.Models;
+using Melodija.Domain.RequestFeatures;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +25,7 @@ namespace Melodija.api.Controllers
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetReleasesForArtist(Guid artistId)
+    public async Task<IActionResult> GetReleasesForArtist(Guid artistId, [FromQuery] ReleaseParameters releaseParameters)
     {
       var artist = await _repository.Artist.GetArtistAsync(artistId, false);
 
@@ -34,7 +35,7 @@ namespace Melodija.api.Controllers
       }
       else
       {
-        var releasesFromDb = _repository.Release.GetReleases(artistId, false);
+        var releasesFromDb = await _repository.Release.GetReleasesAsync(artistId, releaseParameters, false);
 
         var releasesDto = _mapper.Map<IEnumerable<ReleaseDto>>(releasesFromDb);
 
