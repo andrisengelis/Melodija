@@ -4,11 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Melodija.Contracts;
-using Melodija.Domain;
 using Melodija.Domain.DataTransferObjects;
 using Melodija.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 
 namespace Melodija.api.Controllers
 {
@@ -42,7 +40,7 @@ namespace Melodija.api.Controllers
       }
     }
 
-    [HttpGet("{id}", Name = "ArtistById")]
+    [HttpGet("{id:guid}", Name = "ArtistById")]
     public async Task<IActionResult> GetArtist(Guid id)
     {
       try
@@ -52,11 +50,9 @@ namespace Melodija.api.Controllers
         {
           return NotFound();
         }
-        else
-        {
-          var artistDto = _mapper.Map<ArtistDto>(artist);
-          return Ok(artistDto);
-        }
+      
+        var artistDto = _mapper.Map<ArtistDto>(artist);
+        return Ok(artistDto);
       }
       catch (Exception e)
       {
