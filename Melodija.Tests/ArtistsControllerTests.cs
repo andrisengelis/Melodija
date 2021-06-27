@@ -90,6 +90,25 @@ namespace Melodija.Tests
       }
 
     [Fact]
+    public async Task GetArtist_ReturnsStatusCode500ObjectResult_WhenInternalExceptionIsThrown()
+    {
+      var mapperConfig = new MapperConfiguration(c=>c.AddProfile(typeof(api.MappingProfile)));
+      var mapper = mapperConfig.CreateMapper();
+      
+      var mockRepo = new Mock<IRepositoryManager>();
+      mockRepo.Setup(repo => repo.Artist.GetArtistAsync(It.IsAny<Guid>(),false)).Throws<Exception>().Verifiable();
+
+      var sut = new ArtistsController(mockRepo.Object, mapper);
+
+      var result = await sut.GetArtist(new Guid());
+
+      var resultObject = Assert.IsType<ObjectResult>(result);
+      Assert.Equal(500, resultObject.StatusCode);
+      Assert.Equal("Internal server error", resultObject.Value);
+      mockRepo.Verify();
+    }
+    
+    [Fact]
     public async Task GetArtist_ReturnsOkObjectResultWithArtist_WhenIdExists()
     {
       var mapperConfig = new MapperConfiguration(c=>c.AddProfile(typeof(api.MappingProfile)));
@@ -110,7 +129,43 @@ namespace Melodija.Tests
       Assert.Equal("Wolf Alice", artistDto.SortName);
       Assert.Equal(testArtistId, artistDto.Id);
     }
-  
+
+    [Fact]
+    public async Task DeleteArtist_ReturnsANotFoundResult_WhenIdDoesNotExist()
+    {
+      var mapperConfig = new MapperConfiguration(c=>c.AddProfile(typeof(api.MappingProfile)));
+      var mapper = mapperConfig.CreateMapper();
+      
+      var mockRepo = new Mock<IRepositoryManager>();
+      mockRepo.Setup(repo => repo.Artist.GetArtistAsync(It.IsAny<Guid>(),false)).ReturnsAsync((Artist)null);
+      
+      var sut = new ArtistsController(mockRepo.Object, mapper);
+
+      var result = await sut.DeleteArtist(new Guid());
+      
+      Assert.IsType<NotFoundResult>(result);
+    }
+
+    [Fact]
+    public async Task DeleteArtist_DeleteArtistAndReturnNoContentResult_WhenIdExists()
+    {
+      var testArtistId = new Guid("C1DBA294-62CE-4213-B577-A8B9E0944DE0");
+      
+      var mapperConfig = new MapperConfiguration(c=>c.AddProfile(typeof(api.MappingProfile)));
+      var mapper = mapperConfig.CreateMapper();
+      
+      var mockRepo = new Mock<IRepositoryManager>();
+      mockRepo.Setup(repo => repo.Artist.GetArtistAsync(testArtistId, false)).ReturnsAsync(GetTestArtist());
+      mockRepo.Setup(repo => repo.Artist.DeleteArtist(It.IsAny<Artist>())).Verifiable();
+      mockRepo.Setup(repo => repo.SaveAsync()).Verifiable();
+
+      var sut = new ArtistsController(mockRepo.Object, mapper);
+
+      var result = await sut.DeleteArtist(testArtistId);
+
+      Assert.IsType<NoContentResult>(result);
+      mockRepo.Verify();
+    }
     
     private IEnumerable<Artist> GetAllTestArtists()
     {
