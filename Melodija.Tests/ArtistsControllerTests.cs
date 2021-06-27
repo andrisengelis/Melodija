@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using AutoMapper;
 using Melodija.api.Controllers;
@@ -9,7 +8,6 @@ using Melodija.Contracts;
 using Melodija.Domain.DataTransferObjects;
 using Melodija.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic.CompilerServices;
 using Moq;
 using Xunit;
 
@@ -92,7 +90,7 @@ namespace Melodija.Tests
       }
 
     [Fact]
-    public async Task GetArtist_ReturnsOkObjectResultWithArtist_WhemIdExists()
+    public async Task GetArtist_ReturnsOkObjectResultWithArtist_WhenIdExists()
     {
       var mapperConfig = new MapperConfiguration(c=>c.AddProfile(typeof(api.MappingProfile)));
       var mapper = mapperConfig.CreateMapper();
@@ -112,6 +110,8 @@ namespace Melodija.Tests
       Assert.Equal("Wolf Alice", artistDto.SortName);
       Assert.Equal(testArtistId, artistDto.Id);
     }
+  
+    
     private IEnumerable<Artist> GetAllTestArtists()
     {
       var artists = new List<Artist>
